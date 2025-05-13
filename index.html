@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendaftaran SALUT SAROLANGUN</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="logo.png">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="logo.png" alt="LOGO SALUT SAROLANGUN" class="logo">
+            <h1>FORMULIR PENDAFTARAN MAHASISWA BARU</h1>
+            <p>SALUT SAROLANGUN</p>
+        </div>
+        
+        <div class="form-content">
+            <h2>DATA PRIBADI</h2>
+            
+            <form id="registrationForm">
+                <div class="form-group">
+                    <label for="nama" class="required">Nama Lengkap:</label>
+                    <input type="text" id="nama" name="nama" required placeholder="Masukkan nama lengkap sesuai KTP">
+                </div>
+                
+                <div class="form-group">
+                    <label for="ttl" class="required">Tempat, Tanggal Lahir:</label>
+                    <input type="text" id="ttl" name="ttl" required placeholder="Contoh: Sarolangun, 17 Agustus 1995">
+                </div>
+                
+                <div class="form-group">
+                    <label for="alamat" class="required">Alamat Lengkap:</label>
+                    <input type="text" id="alamat" name="alamat" required placeholder="Jl. Contoh No. 123, Kecamatan, Kabupaten">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email" class="required">Email:</label>
+                    <input type="email" id="email" name="email" required placeholder="contoh@email.com">
+                    <p class="info-text">Harap gunakan email aktif</p>
+                </div>
+                
+                <div class="form-group">
+                    <label for="nik" class="required">No. NIK KTP:</label>
+                    <input type="text" id="nik" name="nik" required placeholder="16 digit NIK KTP" maxlength="16" pattern="[0-9]{16}">
+                </div>
+                
+                <div class="form-group">
+                    <label for="whatsapp" class="required">No. WhatsApp:</label>
+                    <input type="tel" id="whatsapp" name="whatsapp" required placeholder="085266000829" pattern="[0-9]{10,15}">
+                    <p class="info-text">Nomor yang terhubung dengan WhatsApp</p>
+                </div>
+                
+                <div class="form-group">
+                    <label for="jurusan" class="required">Jurusan yang Diambil:</label>
+                    <input type="text" id="jurusan" name="jurusan" required placeholder="Contoh: Teknik Informatika">
+                </div>
+                
+                <div class="form-group">
+                    <label for="ibu" class="required">Nama Ibu Kandung:</label>
+                    <input type="text" id="ibu" name="ibu" required placeholder="Nama lengkap ibu kandung">
+                </div>
+                
+                <button type="button" class="submit-btn" onclick="submitToWhatsApp()">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png" alt="WhatsApp" class="whatsapp-icon">
+                    KIRIM DATA PENDAFTARAN
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function submitToWhatsApp() {
+            const nama = document.getElementById('nama').value;
+            const ttl = document.getElementById('ttl').value;
+            const alamat = document.getElementById('alamat').value;
+            const email = document.getElementById('email').value;
+            const nik = document.getElementById('nik').value;
+            const whatsapp = document.getElementById('whatsapp').value;
+            const jurusan = document.getElementById('jurusan').value;
+            const ibu = document.getElementById('ibu').value;
+            
+            // Validasi
+            if (!nama || !ttl || !alamat || !email || !nik || !whatsapp || !jurusan || !ibu) {
+                alert('Harap lengkapi semua kolom yang wajib diisi!');
+                return;
+            }
+            
+            if (nik.length !== 16 || !/^\d+$/.test(nik)) {
+                alert('NIK KTP harus 16 digit angka!');
+                return;
+            }
+            
+            if (!/^\d{10,15}$/.test(whatsapp)) {
+                alert('Nomor WhatsApp harus 10-15 digit angka!');
+                return;
+            }
+            
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                alert('Harap masukkan email yang valid!');
+                return;
+            }
+            
+            // Format pesan
+            const message = `*PENDAFTARAN MAHASISWA BARU SALUT SAROLANGUN*%0A%0A
+*DATA PRIBADI*%0A
+▸ Nama Lengkap: ${nama}%0A
+▸ TTL: ${ttl}%0A
+▸ Alamat: ${alamat}%0A
+▸ Email: ${email}%0A
+▸ NIK KTP: ${nik}%0A
+▸ No. WhatsApp: ${whatsapp}%0A%0A
+*DATA AKADEMIK*%0A
+▸ Jurusan: ${jurusan}%0A%0A
+*DATA KELUARGA*%0A
+▸ Nama Ibu Kandung: ${ibu}%0A%0A
+_Formulir dikirim melalui website pendaftaran SALUT SAROLANGUN_`;
+            
+            // Nomor WhatsApp tujuan
+            window.open(`https://wa.me/6285266000829?text=${message}`, '_blank');
+            
+            // Reset form
+            document.getElementById('registrationForm').reset();
+            
+            alert('Terima kasih! Data pendaftaran Anda telah dikirim ke WhatsApp admin SALUT SAROLANGUN.');
+        }
+    </script>
+</body>
+</html>
